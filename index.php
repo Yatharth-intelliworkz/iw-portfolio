@@ -52,7 +52,7 @@
                 <div class="fg">
                     <img src="https://images.unsplash.com/photo-1763909130914-bb83689ed5ce?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyM3x8fGVufDB8fHx8fA%3D%3D"
                         alt="3D">
-                </div>                
+                </div>
             </div>
 
             <!-- Projects Grid -->
@@ -129,99 +129,5 @@
     </div>
 </section>
 
-<script>
-// Selectors
-const cards = document.querySelectorAll('.project-card');
-const bgs   = document.querySelectorAll('.bg');
-const fgs   = document.querySelectorAll('.fg');
-const btns  = document.querySelectorAll('.filter-btn');
 
-let activeIndex = -1;
-
-// INITIAL SETUP — Hide everything once
-gsap.set(bgs, { opacity: 0 });
-gsap.set(fgs, { 
-  opacity: 0,
-  position: 'fixed',
-  top: '50%', left: '50%',
-  xPercent: -50, yPercent: -50,
-  pointerEvents: 'none'
-});
-gsap.set('.fg img', { width: 0, opacity: 0 });
-
-// FILTER FUNCTION
-function filterProjects(type) {
-  // Reset hover state completely
-  if (activeIndex !== -1) hoverOut();
-
-  btns.forEach(b => b.classList.toggle('active', b.dataset.filter === type));
-
-  cards.forEach(card => {
-    const show = type === 'all' || card.dataset.filters.includes(type);
-    card.classList.toggle('dimmed', !show);
-    card.style.pointerEvents = show ? 'auto' : 'none';
-    if (show) gsap.set(card, { opacity: 1 });
-  });
-}
-
-// HOVER IN
-function hoverIn(i) {
-  if (activeIndex === i || cards[i].classList.contains('dimmed')) return;
-
-  hoverOut(); // Clean previous
-  activeIndex = i;
-  cards[i].classList.add('active-hover');
-
-  // Background fade in
-  gsap.to(bgs[i], { opacity: 1, duration: 0.7, ease: "power2.out" });
-
-  // Image expand from center
-  gsap.to(fgs[i], { opacity: 1, duration: 0.01 });
-  gsap.fromTo(fgs[i].querySelector('img'),
-    { width: 0, opacity: 0 },
-    { width: 600, opacity: 1, duration: 1.1, delay: 0.1, ease: "expo.out" }
-  );
-
-  // Dim other cards
-  cards.forEach((c, idx) => {
-    if (idx !== i && !c.classList.contains('dimmed')) {
-      gsap.to(c, { opacity: 0.15, duration: 0.6 });
-    }
-  });
-}
-
-// HOVER OUT — Super clean
-function hoverOut() {
-  if (activeIndex === -1) return;
-
-  const i = activeIndex;
-  cards[i].classList.remove('active-hover');
-
-  gsap.to(fgs[i].querySelector('img'), { width: 0, opacity: 0, duration: 0.5, ease: "expo.in" });
-  gsap.to(fgs[i], { opacity: 0, duration: 0.4 });
-  gsap.to(bgs[i], { opacity: 0, duration: 0.6 });
-
-  activeIndex = -1;
-
-  // Restore visible cards
-  cards.forEach(c => {
-    if (!c.classList.contains('dimmed')) {
-      gsap.to(c, { opacity: 1, duration: 0.6, ease: "power2.out" });
-    }
-  });
-}
-
-// EVENTS
-cards.forEach((card, i) => {
-  card.addEventListener('mouseenter', () => hoverIn(i));
-  card.addEventListener('mouseleave', hoverOut);
-});
-
-btns.forEach(btn => {
-  btn.addEventListener('click', () => filterProjects(btn.dataset.filter));
-});
-
-// INIT
-filterProjects('all');
-</script>
 <?php include('footer.php') ?>
