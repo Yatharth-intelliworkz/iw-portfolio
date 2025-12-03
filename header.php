@@ -17,15 +17,47 @@
         rel="stylesheet">
     <!-- poppins font -->
     <!-- slick slider -->
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"
+        integrity="sha512-HGOnQO9+SP1V92SrtZfjqxxtLmVzqZpjFFekvzZVWoiASSQgSr4cw9Kqd2+l8Llp4Gm0G8GIFJ4ddwZilcdb8A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css"
         integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-
     <!-- slick slider -->
     <!-- custom css -->
     <link rel="stylesheet" href="css/style.css">
     <!-- custom css -->
 </head>
+
 <body>
-<?php include('menu.php') ?>
+    <header class="header">
+        <div class="container">
+            <nav class="nav_bar">
+
+                <div class="col">
+                    <a href="index.php">
+                        <img class="logo" src="images/logo.svg" alt="Intelliworkz Logo">
+                    </a>
+                </div>
+                <div class="col text-center">
+                    <h4 class="title_30"><span style="color: #9D9CC2">Our</span> <span style="color: #282663">Portfolio</span></h4>
+                </div>
+                <div class="col text-end">
+                    <a href="#" class="header_btn"><span>Start a Project</span> <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M18.75 11.1346V17.3654C18.75 17.7326 18.6041 18.0848 18.3445 18.3445C18.0848 18.6041 17.7326 18.75 17.3654 18.75H2.13462C1.76739 18.75 1.41521 18.6041 1.15554 18.3445C0.895879 18.0848 0.75 17.7326 0.75 17.3654V2.13462C0.75 1.76739 0.895879 1.41521 1.15554 1.15554C1.41521 0.895879 1.76739 0.75 2.13462 0.75H8.36538"
+                                stroke="#0A101C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M13.9043 0.75H18.7505V5.59615" stroke="#0A101C" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M18.75 0.75L9.75 9.75" stroke="#0A101C" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </a>
+                </div>
+
+            </nav>
+        </div>
+    </header>
+
+    <?php include('menu.php') ?>

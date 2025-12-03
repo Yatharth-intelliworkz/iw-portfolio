@@ -1,118 +1,95 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // console.log('Script loaded!');
-    
-    // Check if gsap is loaded
-    if (typeof gsap === 'undefined') {
-        console.error('GSAP is not loaded!');
-        return;
-    }
-    
-    // console.log('GSAP is loaded!');
 
-    // Register ScrollTrigger
-    gsap.registerPlugin(ScrollTrigger);
+  const cards = document.querySelectorAll('.project-card');
+  const bgs = document.querySelectorAll('.bg');
+  const fgs = document.querySelectorAll('.fg');
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  let activeIndex = -1;
+  let activeFilter = 'all';
 
-    // Find the text element
-    const textElement = document.querySelector(".gsap_text");
-    
-    if (!textElement) {
-        console.error('No .gsap_text element found!');
-        return;
-    }
-    
-    // console.log('Text element found:', textElement);
+  function getImageWidth(img) {
+    return img.naturalWidth || img.offsetWidth * 2;
+  }
 
-    // Split text into words
-    function splitTextIntoWords(element) {
-        const text = element.textContent;
-        const words = text.split(' ').filter(word => word.length > 0);
-        
-        // Clear original text
-        element.innerHTML = '';
-        
-        // Create spans for each word
-        words.forEach((word, index) => {
-            let span = document.createElement("span");
-            span.className = "gsap-word";
-            span.style.display = "inline-block";
-            span.textContent = word;
-            element.appendChild(span);
-            
-            // Add space after each word except the last
-            if (index < words.length - 1) {
-                element.appendChild(document.createTextNode(' '));
-            }
-        });
-    }
+  function applyFilter(filter) {
+    activeFilter = filter;
+    filterBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.filter === filter));
 
-    // Apply splitting
-    splitTextIntoWords(textElement);
-    
-    const words = textElement.querySelectorAll('.gsap-word');
-    // console.log('Words created:', words.length);
-
-    // Set initial state
-    gsap.set(words, { opacity: 0.2 });
-
-    // Create animation
-    gsap.to(words, {
-        opacity: 1,
-        stagger: 0.04,
-        duration: 2,
-        ease: "power2.out",
-        scrollTrigger: {
-            trigger: ".project_info",
-            start: "top 90%",
-            end: "bottom 10%",
-            scrub: 2,
-            markers: true, // TEMPORARILY ENABLED to see trigger points
-            // onEnter: () => console.log('Animation triggered!'),
-        }
+    cards.forEach(card => {
+      const matches = filter === 'all' || card.dataset.filters.includes(filter);
+      card.classList.toggle('dimmed', !matches);
+      card.style.pointerEvents = matches ? 'auto' : 'none';
     });
 
-    // console.log('Animation setup complete!');
+    // Reset hover state
+    if (activeIndex !== -1) hoverOut();
+  }
 
-    // Header scroll animation
-    const header = document.querySelector('header');
-    const hamburger = document.querySelector('.hamburger');
-    
-    if (header) {
-        let lastScroll = 0;
+function hoverIn(index) {
+  const card = cards[index];
+  if (card.classList.contains('dimmed')) return;
+  if (activeIndex === index) return;
 
-        if (hamburger) {
-            hamburger.addEventListener('click', () => {
-                alert('Mobile menu would open here');
-            });
-        }
+  // Remove previous active state
+  document.querySelectorAll('.project-card.active-hover').forEach(c => c.classList.remove('active-hover'));
 
-        window.addEventListener('scroll', () => {
-            const currentScroll = window.pageYOffset;
+  activeIndex = index;
+  card.classList.add('active-hover'); // ← This triggers white text
 
-            if (currentScroll <= 0) {
-                gsap.to(header, {
-                    y: 0,
-                    duration: 0.3,
-                    ease: 'power2.out'
-                });
-                return;
-            }
+  const img = fgs[index].querySelector('img');
+  const width = getImageWidth(img);
 
-            if (currentScroll > lastScroll && currentScroll > 100) {
-                gsap.to(header, {
-                    y: -100,
-                    duration: 0.3,
-                    ease: 'power2.out'
-                });
-            } else if (currentScroll < lastScroll) {
-                gsap.to(header, {
-                    y: 0,
-                    duration: 0.3,
-                    ease: 'power2.out'
-                });
-            }
+  // Background fade
+  gsap.to(bgs, { opacity: 0, duration: 0.3 });
+  gsap.to(bgs[index], { opacity: 1, duration: 0.5 });
 
-            lastScroll = currentScroll;
-        });
+  // Image reveal
+  gsap.to(fgs, { width: 0, opacity: 0, duration: 0.3 });
+  gsap.to(fgs[index], { 
+    width: width, 
+    opacity: 1, 
+    duration: 0.6, 
+    ease: "expo.out" 
+  });
+
+  // Dim others (but keep hovered one bright white)
+  cards.forEach((c, i) => {
+    if (i !== index) {
+      c.style.opacity = c.classList.contains('dimmed') ? 0.2 : 0.3;
     }
-    // Header scroll animation
-});
+  });
+}
+
+function hoverOut() {
+  if (activeIndex === -1) return;
+
+  const card = cards[activeIndex];
+  card.classList.remove('active-hover'); // ← Remove white text
+
+  activeIndex = -1;
+
+  gsap.to(bgs, { opacity: 0, duration: 0.5 });
+  gsap.to(fgs, { width: 0, opacity: 0, duration: 0.6, ease: "expo.out" });
+
+  // Reset opacity for non-dimmed cards
+  cards.forEach(card => {
+    if (!card.classList.contains('dimmed')) {
+      card.style.opacity = 0.7;
+    }
+  });
+}
+
+  // Events
+  cards.forEach((card, i) => {
+    card.addEventListener('mouseenter', () => hoverIn(i));
+    card.addEventListener('mouseleave', hoverOut);
+  });
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      hoverOut();
+      applyFilter(btn.dataset.filter);
+    });
+  });
+
+  // Init
+  applyFilter('all');
