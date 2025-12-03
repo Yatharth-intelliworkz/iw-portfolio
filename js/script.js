@@ -282,7 +282,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
  $(".inds_slider").slick({
         infinite:0,
-        slidesToShow:2,
+        slidesToShow:2.2,
         slidesToScroll:1,
         dots:false,
         arrows:false,

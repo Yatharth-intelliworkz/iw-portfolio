@@ -359,7 +359,7 @@
       <div class="slide">
         <a href="javascript:void(0)">
           <div class="title_wrapper">
-            <h2 class="title_80">Food & Beverages</h2>
+            <h2 class="title_80">Solar</h2>
             <p>Industry</p>
           </div>
         </a>
@@ -367,7 +367,7 @@
       <div class="slide">
         <a href="javascript:void(0)">
           <div class="title_wrapper">
-            <h2 class="title_80">Food & Beverages</h2>
+            <h2 class="title_80">Jewellery</h2>
             <p>Industry</p>
           </div>
         </a>
@@ -375,7 +375,7 @@
       <div class="slide">
         <a href="javascript:void(0)">
           <div class="title_wrapper">
-            <h2 class="title_80">Food & Beverages</h2>
+            <h2 class="title_80">Pharmaceuticals</h2>
             <p>Industry</p>
           </div>
         </a>
@@ -383,7 +383,7 @@
       <div class="slide">
         <a href="javascript:void(0)">
           <div class="title_wrapper">
-            <h2 class="title_80">Food & Beverages</h2>
+            <h2 class="title_80">Water</h2>
             <p>Industry</p>
           </div>
         </a>
@@ -391,7 +391,7 @@
       <div class="slide">
         <a href="javascript:void(0)">
           <div class="title_wrapper">
-            <h2 class="title_80">Food & Beverages</h2>
+            <h2 class="title_80">Real Estate</h2>
             <p>Industry</p>
           </div>
         </a>
@@ -399,7 +399,7 @@
       <div class="slide">
         <a href="javascript:void(0)">
           <div class="title_wrapper">
-            <h2 class="title_80">Food & Beverages</h2>
+            <h2 class="title_80">Cosmetics</h2>
             <p>Industry</p>
           </div>
         </a>
@@ -407,7 +407,7 @@
       <div class="slide">
         <a href="javascript:void(0)">
           <div class="title_wrapper">
-            <h2 class="title_80">Food & Beverages</h2>
+            <h2 class="title_80">Events & Expo</h2>
             <p>Industry</p>
           </div>
         </a>
@@ -415,7 +415,7 @@
       <div class="slide">
         <a href="javascript:void(0)">
           <div class="title_wrapper">
-            <h2 class="title_80">Food & Beverages</h2>
+            <h2 class="title_80">Engineering</h2>
             <p>Industry</p>
           </div>
         </a>
