@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
             start: "top 90%",
             end: "bottom 10%",
             scrub: 2,
-            markers: true, // TEMPORARILY ENABLED to see trigger points
+            markers: false, // TEMPORARILY ENABLED to see trigger points
             // onEnter: () => console.log('Animation triggered!'),
         }
     });

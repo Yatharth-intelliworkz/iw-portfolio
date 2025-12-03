@@ -5,18 +5,15 @@
 
             <!-- Background Colors (one per project) -->
             <div class="backgrounds">
-                <div class="bg" style="background:#0f1623;"></div> <!-- metal -->
-                <div class="bg" style="background:#1a1a2e;"></div> <!-- engineering -->
-                <div class="bg" style="background:#2b0b2b;"></div> <!-- fashion -->
-                <div class="bg" style="background:#003366;"></div> <!-- water -->
-                <div class="bg" style="background:#1e3a5f;"></div> <!-- software -->
-                <div class="bg" style="background:#2c2c2c;"></div> <!-- manufacturing -->
-                <div class="bg" style="background:#16213e;"></div> <!-- business -->
-                <div class="bg" style="background:#0f3460;"></div> <!-- renewable -->
-                <div class="bg" style="background:#2a1b3d;"></div> <!-- consulting -->
-                <div class="bg" style="background:#1a1a1a;"></div> <!-- 3d -->
-                <div class="bg" style="background:#3d0b37;"></div> <!-- cosmetics -->
-                <div class="bg" style="background:#111111;"></div> <!-- metal 2 -->
+                <div class="bg" style="background:#0f1623;"></div> <!-- creative -->
+                <div class="bg" style="background:#1a1a2e;"></div> <!-- creative -->
+                <div class="bg" style="background:#2b0b2b;"></div> <!-- creative -->
+                <div class="bg" style="background:#003366;"></div> <!-- creative -->
+                <div class="bg" style="background:#1e3a5f;"></div> <!-- creative -->
+                <div class="bg" style="background:#2c2c2c;"></div> <!-- digital -->
+                <div class="bg" style="background:#16213e;"></div> <!-- digital -->
+                <div class="bg" style="background:#0f3460;"></div> <!-- digital -->
+                <div class="bg" style="background:#2a1b3d;"></div> <!-- website -->
             </div>
 
             <!-- Hover Images (replace with your own!) -->
@@ -55,26 +52,17 @@
                 <div class="fg">
                     <img src="https://images.unsplash.com/photo-1763909130914-bb83689ed5ce?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyM3x8fGVufDB8fHx8fA%3D%3D"
                         alt="3D">
-                </div>
-                <div class="fg">
-                    <img src="https://images.unsplash.com/photo-1762770640764-bfb05d380670?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyOHx8fGVufDB8fHx8fA%3D%3D"
-                        alt="
-                Cosmetics">
-                </div>
-                <div class="fg">
-                    <img src="https://images.unsplash.com/photo-1762423780504-bb663dd65a9d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzMnx8fGVufDB8fHx8fA%3D%3D"
-                        alt="Metal 2">
-                </div>
+                </div>                
             </div>
 
             <!-- Projects Grid -->
             <div class="projects-grid">
                 <!-- CREATIVE -->
-                <div class="project-card" data-index="0" data-filters="creative" data-text="light">
-                    <div class="title_wrapper">
+                <div class="project-card" data-index="0" data-filters="creative website" data-text="light">
+                    <a class="title_wrapper" href="projectlisting.php">
                         <h2 class="title_80">Solar</h2>
                         <p>industry</p>
-                    </div>
+                    </a>
                 </div>
                 <div class="project-card" data-index="1" data-filters="creative">
                     <div class="title_wrapper">
@@ -88,7 +76,7 @@
                         <p>Industry</p>
                     </div>
                 </div>
-                <div class="project-card" data-index="3" data-filters="creative">
+                <div class="project-card" data-index="3" data-filters="creative website">
                     <div class="title_wrapper">
                         <h2 class="title_80">Water</h2>
                         <p>Industry</p>
@@ -142,130 +130,98 @@
 </section>
 
 <script>
+// Selectors
 const cards = document.querySelectorAll('.project-card');
-const bgs = document.querySelectorAll('.bg');
-const fgs = document.querySelectorAll('.fg');
-const filterBtns = document.querySelectorAll('.filter-btn');
+const bgs   = document.querySelectorAll('.bg');
+const fgs   = document.querySelectorAll('.fg');
+const btns  = document.querySelectorAll('.filter-btn');
+
 let activeIndex = -1;
-let activeFilter = 'all';
 
-function applyFilter(filter) {
-    activeFilter = filter;
-    filterBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.filter === filter));
+// INITIAL SETUP — Hide everything once
+gsap.set(bgs, { opacity: 0 });
+gsap.set(fgs, { 
+  opacity: 0,
+  position: 'fixed',
+  top: '50%', left: '50%',
+  xPercent: -50, yPercent: -50,
+  pointerEvents: 'none'
+});
+gsap.set('.fg img', { width: 0, opacity: 0 });
 
-    cards.forEach(card => {
-        const matches = filter === 'all' || card.dataset.filters.includes(filter);
-        card.classList.toggle('dimmed', !matches);
-        card.style.pointerEvents = matches ? 'auto' : 'none';
-    });
+// FILTER FUNCTION
+function filterProjects(type) {
+  // Reset hover state completely
+  if (activeIndex !== -1) hoverOut();
 
-    if (activeIndex !== -1) hoverOut(); // Reset hover if filtering
+  btns.forEach(b => b.classList.toggle('active', b.dataset.filter === type));
+
+  cards.forEach(card => {
+    const show = type === 'all' || card.dataset.filters.includes(type);
+    card.classList.toggle('dimmed', !show);
+    card.style.pointerEvents = show ? 'auto' : 'none';
+    if (show) gsap.set(card, { opacity: 1 });
+  });
 }
 
-function hoverIn(index) {
-    const card = cards[index];
-    if (card.classList.contains('dimmed')) return;
-    if (activeIndex === index) return;
+// HOVER IN
+function hoverIn(i) {
+  if (activeIndex === i || cards[i].classList.contains('dimmed')) return;
 
-    // Clear previous hover
-    document.querySelectorAll('.project-card.active-hover').forEach(c => c.classList.remove('active-hover'));
-    activeIndex = index;
-    card.classList.add('active-hover');
+  hoverOut(); // Clean previous
+  activeIndex = i;
+  cards[i].classList.add('active-hover');
 
-    // Reset all images to hidden + zero width
-    gsap.set(".fg img", {
-        width: 0,
-        opacity: 0
-    });
-    gsap.set(fgs, {
-        opacity: 0
-    });
+  // Background fade in
+  gsap.to(bgs[i], { opacity: 1, duration: 0.7, ease: "power2.out" });
 
-    // Show current background and image container
-    gsap.set(bgs[index], {
-        opacity: 1,
-        duration: 0.6,
-        ease: "power2.out"
-    });
-    gsap.set(fgs[index], {
-        opacity: 1,
-        zIndex: 10
-    });
+  // Image expand from center
+  gsap.to(fgs[i], { opacity: 1, duration: 0.01 });
+  gsap.fromTo(fgs[i].querySelector('img'),
+    { width: 0, opacity: 0 },
+    { width: 600, opacity: 1, duration: 1.1, delay: 0.1, ease: "expo.out" }
+  );
 
-    // Expand width from center: 0 → 600px
-    gsap.to(fgs[index].querySelector('img'), {
-        width: 600,
-        opacity: 1,
-        duration: 1.1,
-        delay: 0.1,
-        ease: "expo.out"
-    });
-
-    // Hide all other project cards
-    cards.forEach((c, i) => {
-        if (i !== index) gsap.to(c, {
-            opacity: 0,
-            duration: 0.5
-        });
-    });
+  // Dim other cards
+  cards.forEach((c, idx) => {
+    if (idx !== i && !c.classList.contains('dimmed')) {
+      gsap.to(c, { opacity: 0.15, duration: 0.6 });
+    }
+  });
 }
 
+// HOVER OUT — Super clean
 function hoverOut() {
-    if (activeIndex === -1) return;
+  if (activeIndex === -1) return;
 
-    const card = cards[activeIndex];
-    card.classList.remove('active-hover');
+  const i = activeIndex;
+  cards[i].classList.remove('active-hover');
 
-    // Shrink image width back to 0
-    gsap.to(fgs[activeIndex].querySelector('img'), {
-        width: 0,
-        opacity: 0,
-        duration: 0.4,
-        ease: "expo.in"
-    });
+  gsap.to(fgs[i].querySelector('img'), { width: 0, opacity: 0, duration: 0.5, ease: "expo.in" });
+  gsap.to(fgs[i], { opacity: 0, duration: 0.4 });
+  gsap.to(bgs[i], { opacity: 0, duration: 0.6 });
 
-    // Fade out background
-    gsap.to(bgs[activeIndex], {
-        opacity: 0,
-        duration: 0.9,
-        ease: "power2.out"
-    });
+  activeIndex = -1;
 
-    // Hide container after animation
-    gsap.to(fgs[activeIndex], {
-        opacity: 0,
-        duration: 0.5,
-        delay: 0.8
-    });
-
-    activeIndex = -1;
-
-    // Bring back visible cards smoothly
-    cards.forEach(card => {
-        if (!card.classList.contains('dimmed')) {
-            gsap.to(card, {
-                opacity: 1,
-                duration: 0.7,
-                ease: "power2.out"
-            });
-        }
-    });
+  // Restore visible cards
+  cards.forEach(c => {
+    if (!c.classList.contains('dimmed')) {
+      gsap.to(c, { opacity: 1, duration: 0.6, ease: "power2.out" });
+    }
+  });
 }
 
-// Events
+// EVENTS
 cards.forEach((card, i) => {
-    card.addEventListener('mouseenter', () => hoverIn(i));
-    card.addEventListener('mouseleave', hoverOut);
+  card.addEventListener('mouseenter', () => hoverIn(i));
+  card.addEventListener('mouseleave', hoverOut);
 });
 
-filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        hoverOut();
-        applyFilter(btn.dataset.filter);
-    });
+btns.forEach(btn => {
+  btn.addEventListener('click', () => filterProjects(btn.dataset.filter));
 });
 
-// Init
-applyFilter('all');
+// INIT
+filterProjects('all');
 </script>
 <?php include('footer.php') ?>

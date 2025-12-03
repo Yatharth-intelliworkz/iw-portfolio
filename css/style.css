@@ -172,19 +172,6 @@ a {
   will-change: width, opacity;
   z-index: -1;
 }
-.fg video {
-  width: 0;
-  height: 600px;
-  object-fit: cover;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  max-width: 600px;
-  will-change: width, opacity;
-  z-index: -1;
-}
 
 
 /* Grid */
@@ -207,13 +194,13 @@ a {
 }
 
 .project-card.active-hover {
-  z-index: 20;
+  z-index: 10;
   position: relative;
 }
 
 /* Completely hide all non-hovered cards when one is active */
 .projects-grid:has(.project-card.active-hover) .project-card:not(.active-hover) {
-  opacity: 0.1 !important;
+  opacity: 0 !important;
   transition: opacity 0.4s ease;
 }
 
@@ -224,7 +211,7 @@ a {
 }
 
 .project-card:not(.dimmed):not(:hover) {
-  opacity: 1;
+  opacity: 1!important;
 }
 
 /* Filters */
@@ -271,7 +258,7 @@ a {
 
 /* project detail */
 .inner_head {
-  margin-top: 15vh;
+  margin-top: 20vh;
   text-align: center;
   margin-bottom: 80px;
 }
