@@ -1,28 +1,28 @@
 
-  const cards = document.querySelectorAll('.project-card');
-  const bgs = document.querySelectorAll('.bg');
-  const fgs = document.querySelectorAll('.fg');
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  let activeIndex = -1;
-  let activeFilter = 'all';
+const cards = document.querySelectorAll('.project-card');
+const bgs = document.querySelectorAll('.bg');
+const fgs = document.querySelectorAll('.fg');
+const filterBtns = document.querySelectorAll('.filter-btn');
+let activeIndex = -1;
+let activeFilter = 'all';
 
-  function getImageWidth(img) {
-    return img.naturalWidth || img.offsetWidth * 2;
-  }
+function getImageWidth(img) {
+  return img.naturalWidth || img.offsetWidth * 2;
+}
 
-  function applyFilter(filter) {
-    activeFilter = filter;
-    filterBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.filter === filter));
+function applyFilter(filter) {
+  activeFilter = filter;
+  filterBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.filter === filter));
 
-    cards.forEach(card => {
-      const matches = filter === 'all' || card.dataset.filters.includes(filter);
-      card.classList.toggle('dimmed', !matches);
-      card.style.pointerEvents = matches ? 'auto' : 'none';
-    });
+  cards.forEach(card => {
+    const matches = filter === 'all' || card.dataset.filters.includes(filter);
+    card.classList.toggle('dimmed', !matches);
+    card.style.pointerEvents = matches ? 'auto' : 'none';
+  });
 
-    // Reset hover state
-    if (activeIndex !== -1) hoverOut();
-  }
+  // Reset hover state
+  if (activeIndex !== -1) hoverOut();
+}
 
 function hoverIn(index) {
   const card = cards[index];
@@ -44,11 +44,11 @@ function hoverIn(index) {
 
   // Image reveal
   gsap.to(fgs, { width: 0, opacity: 0, duration: 0.3 });
-  gsap.to(fgs[index], { 
-    width: width, 
-    opacity: 1, 
-    duration: 0.6, 
-    ease: "expo.out" 
+  gsap.to(fgs[index], {
+    width: width,
+    opacity: 1,
+    duration: 0.6,
+    ease: "expo.out"
   });
 
   // Dim others (but keep hovered one bright white)
@@ -78,18 +78,36 @@ function hoverOut() {
   });
 }
 
-  // Events
-  cards.forEach((card, i) => {
-    card.addEventListener('mouseenter', () => hoverIn(i));
-    card.addEventListener('mouseleave', hoverOut);
-  });
+// Events
+cards.forEach((card, i) => {
+  card.addEventListener('mouseenter', () => hoverIn(i));
+  card.addEventListener('mouseleave', hoverOut);
+});
 
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      hoverOut();
-      applyFilter(btn.dataset.filter);
-    });
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    hoverOut();
+    applyFilter(btn.dataset.filter);
   });
+});
 
-  // Init
-  applyFilter('all');
+// Init
+applyFilter('all');
+
+
+
+// ----------------------
+
+let scrollSpeed = 0.1;  
+let current = 0;
+let target = 0;
+
+function smoothScroll() {
+    target = window.scrollY;
+    current += (target - current) * scrollSpeed;
+    window.scrollTo(0, current);
+    requestAnimationFrame(smoothScroll);
+}
+
+smoothScroll();
+

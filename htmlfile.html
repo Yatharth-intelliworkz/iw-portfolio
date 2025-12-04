@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="gu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hover Image Effect</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: #000;
+            transition: background 0.6s ease;
+            overflow: hidden;
+            font-family: 'Arial Black', sans-serif;
+        }
+
+        .text-item {
+            position: relative;
+            font-size: 80px;
+            color: #666666;
+            font-weight: 900;
+            color: #fff;
+            margin: 20px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .text-item:hover {
+            transform: scale(1.15);
+        }
+
+        .bg-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90vw;
+            height: 90vh;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.7s ease;
+            z-index: 1;
+            border-radius: 20px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+        }
+
+        .text-item:hover~.bg-image {
+            opacity: 0.9;
+        }
+
+        .img1 {
+            background-image: url('https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=80&w=800');
+        }
+
+        .img2 {
+            background-image: url('https://images.unsplash.com/photo-1494500764479-0c8f0c4d2d8c?q=80&w=800');
+        }
+
+        .img3 {
+            background-image: url('https://images.unsplash.com/photo-1518709268805-7a7e3e0ef3c4?q=80&w=800');
+        }
+
+        .img4 {
+            background-image: url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800');
+        }
+
+        .img5 {
+            background-image: url('https://images.unsplash.com/photo-1550439062-609e7e687105?q=80&w=800');
+        }
+
+        .img6 {
+            background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800');
+        }
+
+        .img7 {
+            background-image: url('https://images.unsplash.com/photo-1519389951296-5c79f760c5c8?q=80&w=800');
+        }
+
+        .img8 {
+            background-image: url('https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=800');
+        }
+
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="hero">
+        <div class="text-item" data-img="img1">Engineering</div>
+        <div class="text-item" data-img="img2">Metal</div>
+        <div class="text-item" data-img="img3">Fashion</div>
+        <div class="text-item" data-img="img4">Water</div>
+        <div class="text-item" data-img="img5">Software</div>
+        <div class="text-item" data-img="img6">Manufacturing</div>
+        <div class="text-item" data-img="img7">Software</div>
+        <div class="text-item" data-img="img8">Business</div>
+        <div class="text-item" data-img="img8">Renewable Energy</div>
+        <div class="text-item" data-img="img8">Consulting</div>
+        <div class="text-item" data-img="img8">3D</div>
+        <div class="text-item" data-img="img8">Cosmetics</div>
+    </div>
+
+    <div class="bg-image img1"></div>
+    <div class="bg-image img2"></div>
+    <div class="bg-image img3"></div>
+    <div class="bg-image img4"></div>
+    <div class="bg-image img5"></div>
+    <div class="bg-image img6"></div>
+    <div class="bg-image img7"></div>
+    <div class="bg-image img8"></div>
+
+    <script>
+        const texts = document.querySelectorAll('.text-item');
+        const colors = ['#ff0066', '#00ff99', '#6600ff', '#ff9900', '#00ccff', '#ff3399', '#33ff99', '#9933ff'];
+
+        texts.forEach((text, index) => {
+            text.addEventListener('mouseenter', () => {
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                document.body.style.background = randomColor;
+
+                document.querySelectorAll('.bg-image').forEach(img => img.style.opacity = '0');
+                document.querySelector(`.bg-image.${text.dataset.img}`).style.opacity = '0.9';
+            });
+        });
+
+        document.body.addEventListener('mouseleave', () => {
+            document.body.style.background = '#000';
+            document.querySelectorAll('.bg-image').forEach(img => img.style.opacity = '0');
+        });
+    </script>
+
+</body>
+
+</html>

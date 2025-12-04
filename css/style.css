@@ -101,6 +101,7 @@ a {
   font-size: 16px;
   font-weight: 400;
   line-height: 16px;
+  /* z-index: 99; */
 }
 
 /* footer */
@@ -369,3 +370,112 @@ a {
 .met_ind_text {
   margin-bottom: 0;
 }
+
+/* ------------------------- */
+
+
+/* project detail */
+.inner_head {
+  margin-top: 20vh;
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.breadcrumbs {
+  margin-top: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  font-size: 18px;
+}
+
+.active_breadcrumb {
+  color: var(--282-blue);
+  font-weight: 600;
+}
+
+.mid_detail {
+  margin: 80px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.visit_btn {
+  color: var(--444-grey);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.project_info {
+  color: var(--282-blue);
+  font-size: 36px;
+  font-weight: 300;
+  line-height: 48px;
+  margin-bottom: 20px;
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+table a {
+  text-decoration: underline;
+}
+
+table th {
+  color: #333;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 26px;
+  place-content: flex-start;
+}
+
+table td,
+table th {
+  padding-top: 20px;
+}
+
+td {
+  color: #666;
+  padding-left: 50px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 26px;
+}
+
+.bottom_detail img {
+  margin: 15px 0
+}
+
+.next_project {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 60px 0 100px 0;
+  gap: 20px;
+}
+
+.gsap_text {
+  font-size: 36px;
+  line-height: 1.5;
+}
+
+.gsap-word {
+  display: inline-block;
+  opacity: 0.2;
+  will-change: opacity;
+}
+
+/* project detail */
+
